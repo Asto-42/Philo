@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/14 10:26:58 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/14 11:47:01 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,16 @@
 void	ft_start_thread(t_philo *philo, t_fork *fork, t_context *context, int x)
 {
 	struct timeval	clock;
+
 	//pthread_mutex_t fastmutex = PTHREAD_MUTEX_INITIALIZER;
-	gettimeofday(&clock, NULL);
+	philo->time_born[x] = gettimeofday(&clock, NULL);
+	if (philo->nb_philo[x] % 2 != 0)
+		usleep(context->tte);
 	while (context->total_philo_finish != context->total_philo)
 	{
-		if (philo->have_eat[x] == 0 && fork->dispo[x] == 1)
-		{
-			philo->status[x] = EATING;
-			//ft_philo_is_eating(philo->nb_philo[x], fork[x], context);
-			philo->have_eat[x] = 1;
-		}
-		else if (philo->have_eat[x] == 0 && fork->dispo[context->total_philo] == 1 && x == 1)
-		{
-			philo->status[x] = EATING;
-			//ft_philo_is_eating(philo[x], fork[context->total_philo], context);
-			philo->have_eat[x] = 1;
-		}
-		else if (philo->have_eat[x] == 0 && fork->dispo[x - 1] == 1)
-		{
-			philo->status[x] = EATING;
-			//ft_philo_is_eating(philo[x], fork[x - 1], context);
-			philo->have_eat[x] = 1;
-		}
+		ft_check_philo_died(philo, context, x);
+		ft_philo_want_eat(philo, fork, context, x);
+		ft_philo_want_sleep(philo, context, x);
 	}
 }
 
@@ -100,6 +88,7 @@ void	ft_initialise_data(t_philo *philo, char **argv)
 	philo->need_total_eat = malloc (nb * sizeof(int));
 	philo->have_eat = malloc (nb * sizeof(int));
 	philo->status = malloc (nb * sizeof(int));
+	philo->time_born = malloc (nb * sizeof(int));
 	while (++x <= nb)
 	{
 		philo->nb_philo[x] = x;
@@ -108,6 +97,7 @@ void	ft_initialise_data(t_philo *philo, char **argv)
 		philo->tts[x] = (int)ft_atoi(argv[4]);
 		philo->need_total_eat[x] = ft_atoi(argv[5]);
 		philo->have_eat[x] = 0;
-		philo->status[x] = WAITING;
+		philo->status[x] = THINKING;
+		philo->time_born[x] = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/14 10:19:28 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/14 11:43:54 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@
 # include <time.h>
 # include <pthread.h>
 
-# ifndef FREE
-#  define FREE 0
-# endif
 # ifndef TAKEN
-#  define TAKEN 1
+#  define TAKEN 0
 # endif
-# ifndef WAITING
-#  define WAITING 2
+# ifndef FREE
+#  define FREE 1
 # endif
-# ifndef DEAD
-#  define DEAD 3
+# ifndef SLEEPING
+#  define SLEEPING 2
 # endif
-# ifndef DEAD
-#  define DEAD 4
+# ifndef EATING
+#  define EATING 3
+# endif
+# ifndef THINKING
+#  define THINKING 4
 # endif
 # ifndef DEAD
 #  define DEAD 5
@@ -49,14 +49,15 @@
 
 typedef struct s_philo
 {
-	int		*nb_philo;
-	int		*status;
-	int		*ttd;
-	int		*tte;
-	int		*tts;
-	int		*need_total_eat;
-	int		*have_eat;
-	int		last_time_eat;
+	int					*nb_philo;
+	int					*status;
+	int					*ttd;
+	int					*tte;
+	int					*tts;
+	int					*need_total_eat;
+	int					*have_eat;
+	unsigned long		*time_born;
+	int					*last_time_eat;
 }t_philo;
 
 typedef struct s_context
@@ -84,4 +85,8 @@ int		ft_atoi(const char *nptr);
 void	ft_generate_thread(t_context *context, t_philo *philo, t_fork *fork, char **argv);
 void	ft_initialise_fork(t_fork *fork, char **argv);
 void	ft_initialise_context(t_context *context, t_philo *philo, char **argv);
+void	ft_philo_want_eat(t_philo *philo, t_fork *fork, t_context *context, int x);
+void	ft_philo_want_sleep(t_philo *philo, t_context *context, int nb_philo);
+void	ft_check_philo_died(t_philo *philo, t_context *context, int nb_philo);
+void	ft_philo_is_eating(t_philo *philo, int nb_philo, t_context *context);
 #endif

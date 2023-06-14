@@ -6,13 +6,13 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 10:36:49 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/14 11:45:10 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:51:14 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+//#include "philo.h"
 
-void	ft_philo_want_eat(t_philo *philo, t_fork *fork, t_context *context, int x)
+void	ft_philo_want_eat(t_context *context, int id_philo)
 {
 	struct timeval	clock;
 
@@ -41,15 +41,15 @@ void	ft_philo_want_eat(t_philo *philo, t_fork *fork, t_context *context, int x)
 	}
 }
 
-void	ft_philo_want_sleep(t_philo *philo, t_context *context, int nb_philo)
+void	ft_philo_want_sleep(t_context *context, int id_philo)
 {
 	struct timeval	clock;
-	if (philo->have_eat[nb_philo] == 1)
+	if (philo->have_eat[id_philo] == 1)
 	{
-		philo->status[nb_philo] = SLEEPING;
-		printf("%i %i is sleeping\n", gettimeofday(&clock, NULL), nb_philo);
+		philo->status[id_philo] = SLEEPING;
+		printf("%i %i is sleeping\n", gettimeofday(&clock, NULL), id_philo);
 		usleep(context->tts);
-		philo->have_eat[nb_philo] = 0;
-		philo->status[nb_philo] = THINKING;
+		philo->have_eat[id_philo] = 0;
+		philo->status[id_philo] = THINKING;
 	}
 }

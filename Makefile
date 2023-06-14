@@ -6,7 +6,7 @@
 #    By: jquil <jquil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 12:54:02 by jquil             #+#    #+#              #
-#    Updated: 2023/06/14 11:38:15 by jquil            ###   ########.fr        #
+#    Updated: 2023/06/14 17:00:12 by jquil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ SRCS		=	\
 				ft_atoi.c				\
 				ft_initialise_data.c	\
 				ft_status_philo.c		\
-				ft_want_philo_want.c	\
+				ft_thread.c				\
+				ft_utils.c				\
+				##ft_want_philo_want.c	\
+
 
 OBJS		=	$(SRCS:.c=.o)
 CC			=	cc

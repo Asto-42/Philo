@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/15 15:13:29 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:44:29 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@
 
 typedef struct s_philo
 {
+	pthread_t				thread_nb;
 	unsigned int			id_philo;
 	unsigned int			status;
 	unsigned long			ttd;
 	unsigned long			tte;
 	unsigned long			tts;
-	unsigned int			need_eat;
-	unsigned int			total_eat;
-	unsigned long			time_born;
+	unsigned int			max_eat;
+	unsigned int			actual_nb_eat;
 	unsigned long			last_time_eat;
 	unsigned long			last_time_sleep;
 	pthread_mutex_t			*lf;
@@ -57,17 +57,17 @@ typedef struct s_philo
 
 typedef struct s_context
 {
-	pthread_t					thread_nb;
+	pthread_mutex_t	*death;
+	pthread_mutex_t	*fork;
 	bool						rip;
 	unsigned int				total_philo;
 	unsigned int				total_philo_finish;
 	unsigned long				ttd;
 	unsigned long				tts;
 	unsigned long				tte;
-	unsigned long				last_time;
-	unsigned long				current_time;
-	pthread_mutex_t	*death;
-	pthread_mutex_t	*fork;
+	long long					start_time;
+	long long					last_time;
+	long long					current_time;
 	struct s_philo				*philo;
 }t_context;
 
@@ -79,6 +79,7 @@ void				ft_philo_want_eat(t_context *context, t_philo *philo, int id_philo);
 void				ft_philo_want_sleep(t_context *context, t_philo *philo, int id_philo);
 void				ft_check_philo_died(t_context *context, t_philo *philo, int id_philo);
 void	ft_philo_is_eating(t_context *context, t_philo *philo, int id_philo);
-unsigned long		ft_current_time(void);
+long long		ft_current_time(void);
 int					_single_tone_for_id(void);
+long long	ft_passed_time(t_context *context);
 #endif

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/15 15:15:20 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:52:15 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,22 @@ bool	ft_initialise_context(t_context *context, char **argv)
 	unsigned int	x;
 
 	x = -1;
+	context->rip = 0;
 	context->total_philo = ft_atoi(argv[1]);
 	context->total_philo_finish = 0;
 	context->ttd = ft_atoi(argv[2]);
 	context->tte = ft_atoi(argv[3]);
 	context->tts = ft_atoi(argv[4]);
+	context->start_time = ft_current_time();
 	context->last_time = ft_current_time();
 	context->current_time = ft_current_time();
-	context->rip = 0;
 	if (context->total_philo > 0)
 	{
-		context->death = 0;
-		context->fork = 0;
 		context->death = malloc(sizeof(pthread_mutex_t));
-		context->fork = malloc(sizeof(pthread_mutex_t));
-		while (++x < context->total_philo - 1)
+		context->fork = malloc(sizeof(pthread_mutex_t) * context->total_philo);
+		if (pthread_mutex_init(context->death, NULL) == -1)
+			return (0);
+		while (++x < context->total_philo)
 		{
 			if (pthread_mutex_init(&context->fork[x], NULL) == -1)
 				return (0);
@@ -58,15 +59,19 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 		context->philo[x].tte = ft_atoi(argv[3]);
 		context->philo[x].tts = ft_atoi(argv[4]);
 		if (ft_atoi(argv[5]) == 6)
-			context->philo[x].need_eat = ft_atoi(argv[5]);
+			context->philo[x].max_eat = ft_atoi(argv[5]);
 		else
-			context->philo[x].need_eat = 0;
-		context->philo[x].total_eat = 0;
-		context->philo[x].time_born = ft_current_time();
+			context->philo[x].max_eat = 0;
+		context->philo[x].actual_nb_eat = 0;
 		context->philo[x].last_time_eat = ft_current_time();
 		context->philo[x].last_time_sleep = ft_current_time();
-		context->philo[x].lf = &context->fork[x];
-		context->philo[x].rf = 0;
+		if (x == context->total_philo - 1)
+			context->philo[x].lf = &context->fork[0];
+		context->philo[x].lf = &context->fork[x + 1];
+		if (x != 0)
+			context->philo[x].rf = &context->fork[x];
+		else
+			context->philo[x].rf = &context->fork[context->total_philo];
 	}
 	return (1);
 }

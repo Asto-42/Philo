@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 10:36:49 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/15 14:53:09 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:52:37 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void	ft_philo_want_eat(t_context *context, t_philo *philo, int x)
 {
-	struct timeval	clock;
-
 	// if (philo[x - 1].dispo_forks == FREE && x != 1)
 	// {
-		printf("ICI\n");
 		pthread_mutex_lock(philo[x].lf);
-		printf("%i %i has taken a fork\n", gettimeofday(&clock, NULL), x);
+		printf("%lld %i has taken a fork\n", ft_passed_time(context), philo[x].id_philo);
+		printf("test\n");
 		pthread_mutex_lock(philo[x].rf);
-		printf("%i %i has taken a fork\n", gettimeofday(&clock, NULL), x);
+		printf("test\n");
+		printf("%lld %i has taken a fork\n", ft_passed_time(context), philo[x].id_philo);
 		ft_philo_is_eating(context, philo, x);
-		pthread_mutex_unlock(philo[x].lf);
 		pthread_mutex_unlock(philo[x].rf);
+		pthread_mutex_unlock(philo[x].lf);
 	//}
 	// if (philo[context->total_philo].dispo_forks == FREE && x == 1)
 	// {

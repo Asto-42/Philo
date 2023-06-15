@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/15 11:56:31 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/15 15:47:44 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int id_philo)
 	philo[id_philo].status = EATING;
 	printf("%i %i is eating\n", gettimeofday(&clock, NULL), id_philo);
 	usleep(context->tte);
-	philo[id_philo].total_eat += 1;
+	philo[id_philo].actual_nb_eat += 1;
 	philo[id_philo].tte = context->tte;
 	philo[id_philo].status = THINKING;
 }

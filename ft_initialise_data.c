@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/14 16:42:54 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/15 15:15:20 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ bool	ft_initialise_context(t_context *context, char **argv)
 	context->last_time = ft_current_time();
 	context->current_time = ft_current_time();
 	context->rip = 0;
+	if (context->total_philo > 0)
+	{
+		context->death = 0;
+		context->fork = 0;
+		context->death = malloc(sizeof(pthread_mutex_t));
+		context->fork = malloc(sizeof(pthread_mutex_t));
+		while (++x < context->total_philo - 1)
+		{
+			if (pthread_mutex_init(&context->fork[x], NULL) == -1)
+				return (0);
+		}
+	}
 	if (ft_initialise_philo(context, argv) == 0)
 		return (0);
 	return (1);
@@ -37,10 +49,6 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 	x = -1;
 	context->philo = (t_philo *)malloc(context->total_philo * sizeof(t_philo));
 	if (!context->philo)
-		return (0);
-	context->philo[x].forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * context->total_philo);
-	context->philo[x].dispo_forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * context->total_philo);
-	if (!context->philo[x].forks || !context->philo[x].dispo_forks)
 		return (0);
 	while (++x < context->total_philo)
 	{
@@ -57,10 +65,8 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 		context->philo[x].time_born = ft_current_time();
 		context->philo[x].last_time_eat = ft_current_time();
 		context->philo[x].last_time_sleep = ft_current_time();
-		// pthread_mutex_init(&context->philo->forks[x], NULL);
-		// pthread_mutex_init(&context->philo->dispo_forks[x], NULL);
-		// context->philo.forks[x] = x;
-		// context->philo.dispo_forks = FREE;
+		context->philo[x].lf = &context->fork[x];
+		context->philo[x].rf = 0;
 	}
 	return (1);
 }

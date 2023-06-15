@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:17 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/14 16:02:31 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/15 12:08:49 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	main(int argc, char **argv)
 	{
 		if (ft_initialise_context(&context, argv) == 0)
 			return (0);
-		ft_generate_thread(&context, argv);
+		ft_generate_thread(&context);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/14 17:04:07 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/15 15:13:29 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_philo
 	unsigned long			time_born;
 	unsigned long			last_time_eat;
 	unsigned long			last_time_sleep;
-	pthread_mutex_t				*forks;
-	pthread_mutex_t				*dispo_forks;
+	pthread_mutex_t			*lf;
+	pthread_mutex_t			*rf;
 	struct s_context		*context;
 }t_philo;
 
@@ -66,16 +66,19 @@ typedef struct s_context
 	unsigned long				tte;
 	unsigned long				last_time;
 	unsigned long				current_time;
-	struct s_philo	*philo;
+	pthread_mutex_t	*death;
+	pthread_mutex_t	*fork;
+	struct s_philo				*philo;
 }t_context;
 
 bool				ft_initialise_philo(t_context *context, char **argv);
 unsigned long		ft_atoi(const char *nptr);
 void				ft_generate_thread(t_context *context);
 bool				ft_initialise_context(t_context *context, char **argv);
-void				ft_philo_want_eat(t_context *context, int id_philo);
-void				ft_philo_want_sleep(t_context *context, int id_philo);
-void				ft_check_philo_died(t_context *context, int id_philo);
-void				ft_philo_is_eating(t_context *context, int id_philo);
+void				ft_philo_want_eat(t_context *context, t_philo *philo, int id_philo);
+void				ft_philo_want_sleep(t_context *context, t_philo *philo, int id_philo);
+void				ft_check_philo_died(t_context *context, t_philo *philo, int id_philo);
+void	ft_philo_is_eating(t_context *context, t_philo *philo, int id_philo);
 unsigned long		ft_current_time(void);
+int					_single_tone_for_id(void);
 #endif

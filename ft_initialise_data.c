@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/15 16:52:15 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/22 16:04:00 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,19 @@ bool	ft_initialise_context(t_context *context, char **argv)
 	context->tte = ft_atoi(argv[3]);
 	context->tts = ft_atoi(argv[4]);
 	context->start_time = ft_current_time();
-	context->last_time = ft_current_time();
-	context->current_time = ft_current_time();
+	context->current_time = 0;
+	if (pthread_mutex_init(&context->standard_exit, NULL) == -1)
+		return (0);
+	if (pthread_mutex_init(&context->single_tone, NULL) == -1)
+		return (0);
+	if (pthread_mutex_init(&context->time, NULL) == -1)
+		return (0);
+	if (pthread_mutex_init(&context->total_finish, NULL) == -1)
+		return (0);
 	if (context->total_philo > 0)
 	{
-		context->death = malloc(sizeof(pthread_mutex_t));
 		context->fork = malloc(sizeof(pthread_mutex_t) * context->total_philo);
-		if (pthread_mutex_init(context->death, NULL) == -1)
+		if (pthread_mutex_init(&context->death, NULL) == -1)
 			return (0);
 		while (++x < context->total_philo)
 		{
@@ -58,7 +64,7 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 		context->philo[x].ttd = ft_atoi(argv[2]);
 		context->philo[x].tte = ft_atoi(argv[3]);
 		context->philo[x].tts = ft_atoi(argv[4]);
-		if (ft_atoi(argv[5]) == 6)
+		if (ft_atoi(argv[5]) > 0)
 			context->philo[x].max_eat = ft_atoi(argv[5]);
 		else
 			context->philo[x].max_eat = 0;
@@ -71,7 +77,7 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 		if (x != 0)
 			context->philo[x].rf = &context->fork[x];
 		else
-			context->philo[x].rf = &context->fork[context->total_philo];
+			context->philo[x].rf = &context->fork[context->total_philo - 1];
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/22 16:04:40 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/22 17:41:38 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 {
 	philo[x - 1].status = EATING;
 	ft_print_in_term(context, x, "is eating");
-	if (ft_usleep(context->tte, context) != 1)
-		return ;
+	ft_usleep(context->tte, context);
 	philo[x - 1].actual_nb_eat += 1;
 	philo[x - 1].tte = context->tte;
 	philo[x - 1].status = THINKING;
@@ -32,16 +31,12 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 
 void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 {
-	static long long int	last_time;
-
-	if (!last_time)
-		last_time = 0;
 	pthread_mutex_lock(&context->time);
 	context->current_time = ft_passed_time(context);
-	philo[x - 1].tte = philo[x - 1].tte - (context->current_time - last_time);
-	philo[x - 1].tts = philo[x - 1].tts - (context->current_time - last_time);
-	philo[x - 1].ttd = philo[x - 1].ttd - (context->current_time - last_time);
-	last_time = context->current_time;
+	philo[x - 1].tte = philo[x - 1].tte - (context->current_time - context->last_time);
+	philo[x - 1].tts = philo[x - 1].tts - (context->current_time - context->last_time);
+	philo[x - 1].ttd = philo[x - 1].ttd - (context->current_time - context->last_time);
+	context->last_time = context->current_time;
 	pthread_mutex_unlock(&context->time);
 	if (philo[x - 1].tte <= 0 || philo[x - 1].tts <= 0)
 	{
@@ -50,8 +45,7 @@ void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 		pthread_mutex_unlock(&context->death);
 		context->philo[x - 1].status = DEAD;
 		pthread_mutex_lock(&context->standard_exit);
-		printf("DEBUGG PRINTF curr time %lld, tte = %lld, tts = %lld, ttd = %lld\n", context->current_time, philo[x - 1].tte, philo[x - 1].tts, philo[x - 1].ttd);
-		printf("%lld %i died\n", ft_passed_time(context), philo[x - 1].id_philo);
+		printf("%lld %i died\n", ft_passed_time(context), x);
 		pthread_mutex_unlock(&context->standard_exit);
 	}
 }

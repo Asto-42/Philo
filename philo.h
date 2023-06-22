@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/22 16:03:32 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/22 17:49:19 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_context
 	unsigned long				tte;
 	long long					start_time;
 	long long					current_time;
+	long long					last_time;
 	struct s_philo				*philo;
 }t_context;
 
@@ -88,4 +89,6 @@ long long			ft_passed_time(t_context *context);
 int					ft_usleep(unsigned long	time, t_context *context);
 bool				ft_check_rip(t_context *context);
 void				ft_print_in_term(t_context *context, int x, char *s);
+void				ft_free_context(t_context *context);
+bool				ft_check_finish(t_context *context);
 #endif

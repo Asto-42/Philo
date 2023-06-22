@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/22 15:24:29 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/22 18:13:05 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ bool	ft_check_rip(t_context *context)
 	return (0);
 }
 
+bool	ft_check_finish(t_context *context)
+{
+	pthread_mutex_lock(&context->total_finish);
+	if (context->total_philo_finish != context->total_philo)
+		return (pthread_mutex_unlock(&context->total_finish), 0);
+	pthread_mutex_unlock(&context->total_finish);
+	return (1);
+}
+
 int	ft_usleep(unsigned long	time, t_context *context)
 {
 	unsigned long	tempo;
@@ -47,8 +56,8 @@ int	ft_usleep(unsigned long	time, t_context *context)
 	while (tempo < time)
 	{
 		ft_check_rip(context);
-		tempo += 1000;
-		usleep(1000);
+		tempo += 10;
+		usleep(10);
 	}
 	return (1);
 }

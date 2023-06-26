@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/22 17:49:19 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/26 11:52:53 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,11 @@
 # include <stdbool.h>
 # include <pthread.h>
 
-
-#  define TAKEN 0
-#  define FREE 1
-#  define SLEEPING 2
-#  define EATING 3
-#  define THINKING 4
-#  define DEAD 5
-
+# define TAKEN 0
+# define SLEEPING 2
+# define EATING 3
+# define THINKING 4
+# define DEAD 5
 
 typedef struct s_philo
 {
@@ -44,8 +41,6 @@ typedef struct s_philo
 	unsigned int			id_philo;
 	unsigned int			status;
 	long long				ttd;
-	long long				tte;
-	long long				tts;
 	unsigned int			max_eat;
 	unsigned int			actual_nb_eat;
 	unsigned long			last_time_eat;
@@ -75,20 +70,20 @@ typedef struct s_context
 	struct s_philo				*philo;
 }t_context;
 
-bool				ft_initialise_philo(t_context *context, char **argv);
-unsigned long		ft_atoi(const char *nptr);
-void				ft_generate_thread(t_context *context);
-bool				ft_initialise_context(t_context *context, char **argv);
-void				ft_philo_want_eat(t_context *context, t_philo *philo, int id_philo);
-void				ft_philo_want_sleep(t_context *context, t_philo *philo, int x);
-void				ft_check_philo_died(t_context *context, t_philo *philo, int x);
-void				ft_philo_is_eating(t_context *context, t_philo *philo, int x);
-long long			ft_current_time(void);
-int					_single_tone_for_id(void);
-long long			ft_passed_time(t_context *context);
-int					ft_usleep(unsigned long	time, t_context *context);
-bool				ft_check_rip(t_context *context);
-void				ft_print_in_term(t_context *context, int x, char *s);
-void				ft_free_context(t_context *context);
-bool				ft_check_finish(t_context *context);
+bool			ft_initialise_philo(t_context *context, char **argv);
+unsigned long	ft_atoi(const char *nptr);
+void			ft_generate_thread(t_context *context);
+bool			ft_initialise_context(t_context *context, char **argv);
+void			ft_philo_want_eat(t_context *context, t_philo *philo, int x);
+void			ft_philo_want_sleep(t_context *context, t_philo *philo, int x);
+void			ft_check_philo_died(t_context *context, t_philo *philo, int x);
+void			ft_philo_is_eating(t_context *context, t_philo *philo, int x);
+long long		ft_current_time(void);
+int				_single_tone_for_id(void);
+long long		ft_passed_time(t_context *context);
+int				ft_usleep(unsigned long time, t_context *context, t_philo *philo, int id_philo);
+bool			ft_check_rip(t_context *context);
+void			ft_print_in_term(t_context *context, int x, char *s);
+void			ft_free_context(t_context *context);
+bool			ft_check_finish(t_context *context);
 #endif

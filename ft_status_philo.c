@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/22 17:41:38 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/26 14:13:26 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 {
 	philo[x - 1].status = EATING;
+	philo[x - 1].ttd = context->ttd;
 	ft_print_in_term(context, x, "is eating");
-	ft_usleep(context->tte, context);
+	if (ft_usleep(context->tte, context, philo, x) != 1)
+		return ;
 	philo[x - 1].actual_nb_eat += 1;
-	philo[x - 1].tte = context->tte;
 	philo[x - 1].status = THINKING;
 	if (philo[x - 1].actual_nb_eat == philo[x - 1].max_eat)
 	{
@@ -33,12 +34,10 @@ void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 {
 	pthread_mutex_lock(&context->time);
 	context->current_time = ft_passed_time(context);
-	philo[x - 1].tte = philo[x - 1].tte - (context->current_time - context->last_time);
-	philo[x - 1].tts = philo[x - 1].tts - (context->current_time - context->last_time);
 	philo[x - 1].ttd = philo[x - 1].ttd - (context->current_time - context->last_time);
 	context->last_time = context->current_time;
 	pthread_mutex_unlock(&context->time);
-	if (philo[x - 1].tte <= 0 || philo[x - 1].tts <= 0)
+	if (philo[x - 1].ttd <= 0)
 	{
 		pthread_mutex_lock(&context->death);
 		context->rip = 1;

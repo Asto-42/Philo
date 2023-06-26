@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/22 18:13:05 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/26 11:51:03 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 long long	ft_passed_time(t_context *context)
 {
 	long long int	time;
+
 	context->current_time = ft_current_time();
 	time = context->current_time - context->start_time;
 	return (time);
@@ -22,42 +23,24 @@ long long	ft_passed_time(t_context *context)
 
 long long	ft_current_time(void)
 {
-	struct timeval clock;
-	unsigned long time;
+	struct timeval	clock;
+	unsigned long	time;
 
 	gettimeofday(&clock, NULL);
 	time = clock.tv_sec * 1000 + clock.tv_usec / 1000;
 	return (time);
 }
 
-bool	ft_check_rip(t_context *context)
+int	ft_usleep(unsigned long time, t_context *context, t_philo *philo, int id_philo)
 {
-	pthread_mutex_lock(&context->death);
-	if (context->rip == 1)
-		return (pthread_mutex_unlock(&context->death), 1);
-	pthread_mutex_unlock(&context->death);
-	return (0);
-}
+	const long long start = ft_current_time();
 
-bool	ft_check_finish(t_context *context)
-{
-	pthread_mutex_lock(&context->total_finish);
-	if (context->total_philo_finish != context->total_philo)
-		return (pthread_mutex_unlock(&context->total_finish), 0);
-	pthread_mutex_unlock(&context->total_finish);
-	return (1);
-}
-
-int	ft_usleep(unsigned long	time, t_context *context)
-{
-	unsigned long	tempo;
-
-	tempo = 0;
-	while (tempo < time)
+	while ((ft_current_time()- start) < (long long)time / 1000)
 	{
-		ft_check_rip(context);
-		tempo += 10;
+		if (ft_check_rip(context) != 0)
+			return (0);
 		usleep(10);
+		ft_check_philo_died(context, philo, id_philo);
 	}
 	return (1);
 }

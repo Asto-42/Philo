@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 10:36:49 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/22 18:21:20 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/26 14:03:44 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	ft_philo_want_eat(t_context *context, t_philo *philo, int x)
 {
 	if (x % 2 == 0)
 	{
-
-
 		pthread_mutex_lock(philo[x - 1].rf);
 		ft_print_in_term(context, x, "has taken a fork");
 		pthread_mutex_lock(philo[x - 1].lf);
@@ -28,6 +26,7 @@ void	ft_philo_want_eat(t_context *context, t_philo *philo, int x)
 	}
 	else
 	{
+
 		pthread_mutex_lock(philo[x - 1].lf);
 		ft_print_in_term(context, x, "has taken a fork");
 		pthread_mutex_lock(philo[x - 1].rf);
@@ -42,8 +41,8 @@ void	ft_philo_want_sleep(t_context *context, t_philo *philo, int x)
 {
 	philo[x - 1].status = SLEEPING;
 	ft_print_in_term(context, x, "is sleeping");
-	if (ft_usleep(context->tte, context) != 1)
+	if (ft_usleep(context->tts, context, philo, x) != 1)
 		return ;
-	philo[x - 1].tts = context->tts;
 	philo[x - 1].status = THINKING;
+	ft_print_in_term(context, x, "is thinking");
 }

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/26 13:37:22 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/27 09:58:37 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 		else
 			context->philo[x].max_eat = 0;
 		context->philo[x].actual_nb_eat = 0;
-		context->philo[x].last_time_eat = ft_current_time();
-		context->philo[x].last_time_sleep = ft_current_time();
+		context->philo[x].last_time_eat = 0;
 		ft_fork_assignation(context, x);
 	}
 	return (1);

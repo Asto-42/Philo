@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/26 14:13:26 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/27 10:30:35 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 {
 	philo[x - 1].status = EATING;
 	philo[x - 1].ttd = context->ttd;
+	pthread_mutex_lock(&context->time);
+	philo[x - 1].last_time_eat = ft_passed_time(context);
+	pthread_mutex_unlock(&context->time);
 	ft_print_in_term(context, x, "is eating");
 	if (ft_usleep(context->tte, context, philo, x) != 1)
 		return ;
@@ -34,16 +37,21 @@ void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 {
 	pthread_mutex_lock(&context->time);
 	context->current_time = ft_passed_time(context);
-	philo[x - 1].ttd = philo[x - 1].ttd - (context->current_time - context->last_time);
-	context->last_time = context->current_time;
 	pthread_mutex_unlock(&context->time);
-	if (philo[x - 1].ttd <= 0)
+// if (x == 3 && context->current_time > 290)
+// {
+// pthread_mutex_lock(&context->standard_exit);
+// printf("time since last lunch = %lld\n", (context->current_time - philo[x - 1].last_time_eat));
+// pthread_mutex_unlock(&context->standard_exit);
+// }
+	if ((context->current_time - philo[x - 1].last_time_eat) >= context->ttd)
 	{
 		pthread_mutex_lock(&context->death);
 		context->rip = 1;
 		pthread_mutex_unlock(&context->death);
 		context->philo[x - 1].status = DEAD;
 		pthread_mutex_lock(&context->standard_exit);
+		printf("\nRapport d'autopsie :\nphilo %i die, philo last eat = %lld, current = %lld\ncurrent - lte = %lld\t c->ttd = %lld\n", x, philo[x - 1].last_time_eat, context->current_time, context->current_time - philo[x - 1].last_time_eat, context->ttd);
 		printf("%lld %i died\n", ft_passed_time(context), x);
 		pthread_mutex_unlock(&context->standard_exit);
 	}

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/26 11:52:53 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/27 10:01:20 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_philo
 	long long				ttd;
 	unsigned int			max_eat;
 	unsigned int			actual_nb_eat;
-	unsigned long			last_time_eat;
+	long long				last_time_eat;
 	unsigned long			last_time_sleep;
 	pthread_mutex_t			*lf;
 	pthread_mutex_t			*rf;
@@ -61,7 +61,7 @@ typedef struct s_context
 	bool						rip;
 	unsigned int				total_philo;
 	unsigned int				total_philo_finish;
-	unsigned long				ttd;
+	long long					ttd;
 	unsigned long				tts;
 	unsigned long				tte;
 	long long					start_time;

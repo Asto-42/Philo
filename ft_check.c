@@ -6,14 +6,15 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 10:03:39 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/26 10:03:52 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/28 10:34:40 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	ft_check_rip(t_context *context)
+bool	ft_check_rip(t_context *context, t_philo *philo, int x)
 {
+	ft_check_philo_died(context, philo, x);
 	pthread_mutex_lock(&context->death);
 	if (context->rip == 1)
 		return (pthread_mutex_unlock(&context->death), 1);

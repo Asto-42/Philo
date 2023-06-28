@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/28 09:51:39 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/28 11:08:34 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 	pthread_mutex_lock(&context->time);
 	philo[x - 1].last_time_eat = ft_passed_time(context);
 	pthread_mutex_unlock(&context->time);
-	ft_print_in_term(context, x, "is eating");
+	ft_print_in_term(context, x, "is eating", philo);
 	if (ft_usleep(context->tte, context, philo, x) != 1)
 		return ;
 	philo[x - 1].actual_nb_eat += 1;
 	philo[x - 1].status = THINKING;
+	ft_print_in_term(context, x, "is thinking", philo);
 	if (philo[x - 1].actual_nb_eat == philo[x - 1].max_eat)
 	{
 		pthread_mutex_lock(&context->total_finish);
@@ -35,6 +36,8 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 
 void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 {
+	if (context->rip == 1)
+		return ;
 	pthread_mutex_lock(&context->time);
 	context->current_time = ft_passed_time(context);
 	pthread_mutex_unlock(&context->time);
@@ -45,8 +48,8 @@ void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 		pthread_mutex_unlock(&context->death);
 		context->philo[x - 1].status = DEAD;
 		pthread_mutex_lock(&context->standard_exit);
-		printf("\nRapport d'autopsie :\nphilo %i die, philo last eat = %lld, current = %lld\ncurrent - lte = %lld\t c->ttd = %lld\n", x, philo[x - 1].last_time_eat, context->current_time, context->current_time - philo[x - 1].last_time_eat, context->ttd);
 		printf("%lld %i died\n", ft_passed_time(context), x);
+		printf("\nRapport d'autopsie :\nphilo %i die, philo last eat = %lld, current = %lld\ncurrent - lte = %lld\t c->ttd = %lld\n", x, philo[x - 1].last_time_eat, context->current_time, context->current_time - philo[x - 1].last_time_eat, context->ttd);
 		pthread_mutex_unlock(&context->standard_exit);
 	}
 }

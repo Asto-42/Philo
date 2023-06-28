@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/27 10:01:20 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/28 11:09:12 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void			ft_philo_is_eating(t_context *context, t_philo *philo, int x);
 long long		ft_current_time(void);
 int				_single_tone_for_id(void);
 long long		ft_passed_time(t_context *context);
-int				ft_usleep(unsigned long time, t_context *context, t_philo *philo, int id_philo);
-bool			ft_check_rip(t_context *context);
-void			ft_print_in_term(t_context *context, int x, char *s);
+int				ft_usleep(unsigned long time, t_context *context, t_philo *philo, int x);
+bool			ft_check_rip(t_context *context, t_philo *philo, int x);
+void			ft_print_in_term(t_context *context, int x, char *s, t_philo *philo);
 void			ft_free_context(t_context *context);
 bool			ft_check_finish(t_context *context);
 #endif

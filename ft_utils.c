@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/28 11:09:04 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/28 11:12:11 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ long long	ft_current_time(void)
 	return (time);
 }
 
-int	ft_usleep(unsigned long time, t_context *context, t_philo *philo, int x)
+int	ft_usleep(long long time, t_context *c, t_philo *p, int x)
 {
-	const long long start = ft_current_time();
+	const long long	start = ft_current_time();
 
-	while ((ft_current_time()- start) < (long long)time / 1000)
+	while ((ft_current_time() - start) < (long long)time / 1000)
 	{
-		if (ft_check_rip(context, philo, id_philo) != 0)
+		if (ft_check_rip(c, p, x) != 0)
 			return (0);
 		usleep(10);
 	}
@@ -56,14 +56,14 @@ int	_single_tone_for_id(void)
 		return (++id_philo);
 }
 
-void	ft_print_in_term(t_context *context, int x, char *s, t_philo *philo)
+void	ft_print_in_term(t_context *c, int x, char *s, t_philo *p)
 {
-	if (ft_check_rip(context, philo, x) == 0)
+	if (ft_check_rip(c, p, x) == 0)
 	{
-		pthread_mutex_lock(&context->standard_exit);
-		pthread_mutex_lock(&context->time);
-		printf("%lld %i %s\n", ft_passed_time(context), x, s);
-		pthread_mutex_unlock(&context->time);
-		pthread_mutex_unlock(&context->standard_exit);
+		pthread_mutex_lock(&c->standard_exit);
+		pthread_mutex_lock(&c->time);
+		printf("%lld %i %s\n", ft_passed_time(c), x, s);
+		pthread_mutex_unlock(&c->time);
+		pthread_mutex_unlock(&c->standard_exit);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:11 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/28 15:09:13 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/28 15:42:59 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ void	ft_generate_thread(t_context *context)
 		pthread_create(&context->philo->thread_nb,
 			NULL, (void *)ft_start_thread, context);
 	pthread_join(context->philo->thread_nb, NULL);
+	printf("oui\n");
+	usleep(1000);
 	ft_free_context(context);
 }

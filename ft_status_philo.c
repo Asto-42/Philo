@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/27 10:30:35 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/28 09:51:39 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 	pthread_mutex_lock(&context->time);
 	context->current_time = ft_passed_time(context);
 	pthread_mutex_unlock(&context->time);
-// if (x == 3 && context->current_time > 290)
-// {
-// pthread_mutex_lock(&context->standard_exit);
-// printf("time since last lunch = %lld\n", (context->current_time - philo[x - 1].last_time_eat));
-// pthread_mutex_unlock(&context->standard_exit);
-// }
 	if ((context->current_time - philo[x - 1].last_time_eat) >= context->ttd)
 	{
 		pthread_mutex_lock(&context->death);

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/26 11:51:03 by jquil            ###   ########.fr       */
+/*   Updated: 2023/06/28 09:49:03 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ long long	ft_passed_time(t_context *context)
 {
 	long long int	time;
 
-	context->current_time = ft_current_time();
-	time = context->current_time - context->start_time;
+	time = ft_current_time() - context->start_time;
 	return (time);
 }
 

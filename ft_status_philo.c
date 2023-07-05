@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/05 12:46:24 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/05 16:31:07 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 
 void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 {
+	long long	time;
+
 	pthread_mutex_lock(&context->death);
 	if (context->rip == 1)
 	{
@@ -45,19 +47,17 @@ void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 	pthread_mutex_unlock(&context->death);
 	pthread_mutex_lock(&context->time);
 	context->current_time = ft_passed_time(context);
+	time = context->current_time;
 	pthread_mutex_unlock(&context->time);
-	if ((context->current_time - philo[x - 1].last_time_eat) >= context->ttd)
+	if ((time - philo[x - 1].last_time_eat) >= context->ttd)
 	{
-		pthread_mutex_lock(&context->standard_exit);
-		printf("current = %lld\tlast time eat = %lld\tttd = %lld\n", context->current_time, philo[x - 1].last_time_eat, context->ttd);
-		pthread_mutex_unlock(&context->standard_exit);
 		pthread_mutex_lock(&context->death);
 		context->rip = 1;
 		pthread_mutex_unlock(&context->death);
 		context->philo[x - 1].status = DEAD;
 		pthread_mutex_lock(&context->standard_exit);
 		pthread_mutex_lock(&context->time);
-		printf("%lld %i died\n", ft_passed_time(context), x);
+		printf("%lld %i died\n", time, x);
 		pthread_mutex_unlock(&context->time);
 		pthread_mutex_unlock(&context->standard_exit);
 	}

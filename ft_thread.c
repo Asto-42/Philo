@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:11 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/28 15:42:59 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/05 16:35:39 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	ft_start_thread(void *con)
 	pthread_mutex_unlock(&context->single_tone);
 	if ((id_philo) % 2 == 0)
 		ft_usleep(context->tte, context, philo, id_philo);
-	while (ft_check_finish(context) == 0 && ft_check_rip(context, philo, id_philo) == 0)
+	while (ft_check_finish(context) == 0
+		&& ft_check_rip(context, philo, id_philo) == 0)
 	{
 		ft_philo_want_eat(context, philo, id_philo);
 		ft_philo_want_sleep(context, philo, id_philo);
@@ -39,11 +40,13 @@ void	ft_generate_thread(t_context *context)
 {
 	unsigned int	x;
 
-	x = 0;
-	while (++x <= context->total_philo)
-		pthread_create(&context->philo->thread_nb,
+	x = -1;
+	while (++x < context->total_philo)
+		pthread_create(&context->philo[x].thread_nb,
 			NULL, (void *)ft_start_thread, context);
-	pthread_join(context->philo->thread_nb, NULL);
+	x = -1;
+	while (++x < context->total_philo)
+		pthread_join(context->philo[x].thread_nb, NULL);
 	printf("oui\n");
 	usleep(1000);
 	ft_free_context(context);

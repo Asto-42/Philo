@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 10:36:49 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/05 16:35:23 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/05 16:42:55 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_philo_want_sleep(t_context *context, t_philo *philo, int x)
 {
 	philo[x - 1].status = SLEEPING;
 	ft_print_in_term(context, x, "is sleeping", philo);
-	if (ft_usleep(context->tts, context, philo, x) != 1)
+	if (ft_usleep(context->tts, context, philo) != 1)
 		return ;
 	philo[x - 1].status = THINKING;
 	ft_print_in_term(context, x, "is thinking", philo);

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/05 16:31:07 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/05 16:42:27 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_philo_is_eating(t_context *context, t_philo *philo, int x)
 	philo[x - 1].last_time_eat = ft_passed_time(context);
 	pthread_mutex_unlock(&context->time);
 	ft_print_in_term(context, x, "is eating", philo);
-	if (ft_usleep(context->tte, context, philo, x) != 1)
+	if (ft_usleep(context->tte, context, philo) != 1)
 		return ;
 	philo[x - 1].actual_nb_eat += 1;
 	philo[x - 1].status = THINKING;

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/28 15:10:07 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/05 16:41:16 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,21 @@ long long	ft_current_time(void)
 	return (time);
 }
 
-int	ft_usleep(long long time, t_context *c, t_philo *p, int x)
+int	ft_usleep(long long time, t_context *c, t_philo *p)
 {
 	const long long	start = ft_current_time();
+	unsigned int	x;
 
+	x = 0;
 	while ((ft_current_time() - start) < (long long)time / 1000)
 	{
-		if (ft_check_rip(c, p, x) != 0)
-			return (0);
+		while (++x < c->total_philo)
+		{
+			if (ft_check_rip(c, p, x) != 0)
+				return (0);
+		}
 		usleep(10);
+		x = 0;
 	}
 	return (1);
 }

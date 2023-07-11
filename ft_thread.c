@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:11 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/05 16:42:42 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/11 14:56:00 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_start_thread(void *con)
 	pthread_mutex_unlock(&context->single_tone);
 	if ((id_philo) % 2 == 0)
 		ft_usleep(context->tte, context, philo);
-	while (ft_check_finish(context) == 0
+	while ((ft_check_finish(context) == 0 || context->target == 0)
 		&& ft_check_rip(context, philo, id_philo) == 0)
 	{
 		ft_philo_want_eat(context, philo, id_philo);

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/27 09:58:37 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/11 14:54:56 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ bool	ft_initialise_context(t_context *context, char **argv)
 	context->start_time = ft_current_time();
 	context->current_time = 0;
 	context->last_time = 0;
+	if (argv[5])
+		context->target = 1;
+	else
+		context->target = 0;
 	if (ft_initialise_context_2(context) == 0)
 		return (0);
 	if (ft_initialise_philo(context, argv) == 0)
@@ -79,7 +83,7 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 		context->philo[x].id_philo = x + 1;
 		context->philo[x].status = THINKING;
 		context->philo[x].ttd = ft_atoi(argv[2]);
-		if (ft_atoi(argv[5]) > 0)
+		if (argv[5])
 			context->philo[x].max_eat = ft_atoi(argv[5]);
 		else
 			context->philo[x].max_eat = 0;

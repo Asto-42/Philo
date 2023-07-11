@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:17 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/21 17:53:07 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/11 14:54:52 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int	ft_input_checker(char **argv)
 		return (0);
 	if (ft_atoi(argv[4]) <= 0 || ft_atoi(argv[4]) > 4294967295)
 		return (0);
-	if (ft_atoi(argv[5]) <= 0 || ft_atoi(argv[5]) > 4294967295)
-		return (0);
+	if (argv[5])
+	{
+		if (ft_atoi(argv[5]) <= 0 || ft_atoi(argv[5]) > 4294967295)
+			return (0);
+	}
 	return (1);
 }
 
@@ -37,7 +40,7 @@ int	main(int argc, char **argv)
 {
 	t_context	context;
 
-	if (argc != 6)
+	if (argc < 5)
 		ft_error();
 	if (ft_input_checker(argv) != 1)
 		ft_error();

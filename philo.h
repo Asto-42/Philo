@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:29 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/05 16:40:19 by jquil            ###   ########.fr       */
+/*   Updated: 2023/07/11 13:52:15 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_context
 	pthread_mutex_t				time;
 	pthread_mutex_t				total_finish;
 	bool						rip;
+	bool						target;
 	unsigned int				total_philo;
 	unsigned int				total_philo_finish;
 	long long					ttd;

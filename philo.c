@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:17 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/11 14:54:52 by jquil            ###   ########.fr       */
+/*   Updated: 2023/08/25 15:34:53 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	ft_input_checker(char **argv)
 {
-	if (ft_atoi(argv[1]) < 0 || ft_atoi(argv[1]) > 4294967295)
+	if (ft_atoi(argv[1]) <= 0 || ft_atoi(argv[1]) > 32767)
 		return (0);
-	if (ft_atoi(argv[2]) <= 0 || ft_atoi(argv[2]) > 4294967295)
+	if (ft_atoi(argv[2]) <= 0 || ft_atoi(argv[2]) > 32767)
 		return (0);
-	if (ft_atoi(argv[3]) <= 0 || ft_atoi(argv[3]) > 4294967295)
+	if (ft_atoi(argv[3]) <= 0 || ft_atoi(argv[3]) > 32767)
 		return (0);
-	if (ft_atoi(argv[4]) <= 0 || ft_atoi(argv[4]) > 4294967295)
+	if (ft_atoi(argv[4]) <= 0 || ft_atoi(argv[4]) > 32767)
 		return (0);
 	if (argv[5])
 	{
-		if (ft_atoi(argv[5]) <= 0 || ft_atoi(argv[5]) > 4294967295)
+		if (ft_atoi(argv[5]) <= 0 || ft_atoi(argv[5]) > 32767)
 			return (0);
 	}
 	return (1);
@@ -39,6 +39,7 @@ void	ft_error(void)
 int	main(int argc, char **argv)
 {
 	t_context	context;
+
 
 	if (argc < 5)
 		ft_error();

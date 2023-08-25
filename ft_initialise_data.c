@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/11 14:54:56 by jquil            ###   ########.fr       */
+/*   Updated: 2023/08/25 15:35:55 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	ft_initialise_context_2(t_context *context)
 {
-	unsigned int	x;
+	unsigned long long	x;
 
 	x = -1;
 	if (pthread_mutex_init(&context->standard_exit, NULL) == -1)

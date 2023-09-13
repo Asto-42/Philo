@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 09:43:56 by jquil             #+#    #+#             */
-/*   Updated: 2023/07/05 16:54:50 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/13 14:39:43 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	ft_check_philo_died(t_context *context, t_philo *philo, int x)
 	time = context->current_time;
 	time_eat = philo[x - 1].last_time_eat;
 	pthread_mutex_unlock(&context->time);
-	if ((time - time_eat) >= context->ttd)
+	pthread_mutex_lock(&context->death);
+	if ((time - time_eat) >= context->ttd && context->rip == 0)
 	{
-		pthread_mutex_lock(&context->death);
 		context->rip = 1;
-		pthread_mutex_unlock(&context->death);
 		pthread_mutex_lock(&context->standard_exit);
 		(pthread_mutex_lock(&context->time), printf("%lld %i died\n", time, x));
 		pthread_mutex_unlock(&context->time);
 		pthread_mutex_unlock(&context->standard_exit);
 	}
+	pthread_mutex_unlock(&context->death);
 }

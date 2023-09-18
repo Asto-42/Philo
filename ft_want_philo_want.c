@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 10:36:49 by jquil             #+#    #+#             */
-/*   Updated: 2023/09/13 14:54:25 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/13 16:45:53 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,21 @@ void	ft_philo_want_eat(t_context *context, t_philo *philo, int x)
 
 void	ft_philo_want_sleep(t_context *context, t_philo *philo, int x)
 {
+	unsigned long long time;
+
+	if ((context->ttd - (context->tte + context->tts) > context->tte))
+		time = context->tte / 1000;
+	else
+		time = (context->ttd - (context->tte + context->tts) / 1000);
 	philo[x - 1].status = SLEEPING;
 	ft_print_in_term(context, x, "is sleeping", philo);
 	if (ft_usleep(context->tts, context, philo) != 1)
 		return ;
 	philo[x - 1].status = THINKING;
 	ft_print_in_term(context, x, "is thinking", philo);
-	if (ft_usleep((context->tte/2), context, philo) != 1)
-		return ;
+	if (context->total_philo % 2 != 0)
+	{
+		if (ft_usleep(time, context, philo) != 1)
+			return ;
+	}
 }

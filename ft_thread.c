@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:11 by jquil             #+#    #+#             */
-/*   Updated: 2023/08/25 13:35:47 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/13 16:28:25 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int	ft_start_thread(void *con)
 		&& ft_check_rip(context, philo, id_philo) == 0)
 	{
 		ft_philo_want_eat(context, philo, id_philo);
-		ft_philo_want_sleep(context, philo, id_philo);
-		if (ft_usleep(10, context, philo) != 1)
-			break ;
+		if (ft_check_finish(context) == 0)
+			ft_philo_want_sleep(context, philo, id_philo);
+		// if (ft_usleep(10, context, philo) != 1)
+		// 	break ;
 	}
 	return (0);
 }

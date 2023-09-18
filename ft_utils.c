@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:11:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/09/18 16:01:22 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/18 17:03:21 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,13 @@ void	ft_print_in_term(t_context *c, int x, char *s, t_philo *p)
 {
 	if (ft_check_rip(c, p, x) == 0)
 	{
+		pthread_mutex_lock(&c->death);
 		pthread_mutex_lock(&c->standard_exit);
 		pthread_mutex_lock(&c->time);
-		printf("%lld %i %s\n", ft_passed_time(c), x, s);
+		if (c->rip == 0)
+			printf("%lld %i %s\n", ft_passed_time(c), x, s);
 		pthread_mutex_unlock(&c->time);
 		pthread_mutex_unlock(&c->standard_exit);
+		pthread_mutex_unlock(&c->death);
 	}
 }

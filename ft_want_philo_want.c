@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 10:36:49 by jquil             #+#    #+#             */
-/*   Updated: 2023/09/18 16:34:23 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/18 16:58:17 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_philo_want_sleep(t_context *context, t_philo *philo, int x)
 	unsigned long long time;
 
 	if ((context->ttd - (context->tte + context->tts) > context->tte))
-		time = context->tte;
+		time = context->tte / 3;
 	else
 		time = ((context->ttd - (context->tte + context->tts)) / 5);
 	philo->status = SLEEPING;

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:15:46 by jquil             #+#    #+#             */
-/*   Updated: 2023/09/18 14:59:41 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/26 21:00:08 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,29 @@ bool	ft_initialise_context_2(t_context *context)
 	return (1);
 }
 
-bool	ft_initialise_context(t_context *context, char **argv)
+t_context	*ft_initialise_context_1(t_context *context, char **argv)
 {
 	context->rip = 0;
 	context->total_philo = ft_atoi(argv[1]);
 	context->total_philo_finish = 0;
 	context->ttd = ft_atoi(argv[2]);
-	context->tte = ft_atoi(argv[3]) * 1000;
-	context->tts = ft_atoi(argv[4]) * 1000;
+	context->tte = ft_atoi(argv[3]);
+	context->tts = ft_atoi(argv[4]);
+	return (context);
+}
+
+bool	ft_initialise_context(t_context *context, char **argv)
+{
+	int	t_max;
+
+	context = ft_initialise_context_1(context, argv);
+	t_max = context->tte;
+	if (context->tte < context->tts)
+		t_max = context->tts;
+	context->ttt = context->tte - context->tts + 3;
+	if ((context->total_philo % 2) != 0
+		&& (context->tte + context->tts) <= context->ttd / 2)
+		context->ttt = context->ttt * 2;
 	context->start_time = ft_current_time();
 	context->current_time = 0;
 	context->last_time = 0;
@@ -88,7 +103,7 @@ bool	ft_initialise_philo(t_context *context, char **argv)
 		else
 			context->philo[x].max_eat = 0;
 		context->philo[x].actual_nb_eat = 0;
-		context->philo[x].last_time_eat = 0;
+		context->philo[x].last_time_eat = ft_passed_time(context);
 		context->philo[x].context = context;
 		ft_fork_assignation(context, x);
 	}

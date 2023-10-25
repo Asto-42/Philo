@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 10:03:39 by jquil             #+#    #+#             */
-/*   Updated: 2023/06/28 10:34:40 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/26 20:29:23 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 bool	ft_check_rip(t_context *context, t_philo *philo, int x)
 {
-	ft_check_philo_died(context, philo, x);
+	if (x % 2 != 0)
+		ft_check_philo_died(context, philo, x);
 	pthread_mutex_lock(&context->death);
 	if (context->rip == 1)
 		return (pthread_mutex_unlock(&context->death), 1);

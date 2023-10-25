@@ -6,7 +6,7 @@
 #    By: jquil <jquil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 12:54:02 by jquil             #+#    #+#              #
-#    Updated: 2023/06/26 10:04:22 by jquil            ###   ########.fr        #
+#    Updated: 2023/09/26 21:04:00 by jquil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS		=	\
 				ft_want_philo_want.c	\
 				ft_free_data.c			\
 				ft_check.c				\
+				fork_trauma.c			\
 
 
 OBJS		=	$(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: jquil <jquil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:55:17 by jquil             #+#    #+#             */
-/*   Updated: 2023/08/25 15:34:53 by jquil            ###   ########.fr       */
+/*   Updated: 2023/09/26 21:05:32 by jquil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	ft_error(void)
 int	main(int argc, char **argv)
 {
 	t_context	context;
-
 
 	if (argc < 5)
 		ft_error();
